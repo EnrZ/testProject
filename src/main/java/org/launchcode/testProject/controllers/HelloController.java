@@ -66,7 +66,7 @@ public class HelloController {
 
     @GetMapping("hellolang")
     @ResponseBody
-    public String greetingMsg(@RequestParam String name, String languages) {
+    public static String createMessage(@RequestParam String name, String languages) {
         //this method expects a query parameter called name(bc of requestparam), name has to match
         String diffLangHello = "";
         if (languages.equals("eng")) {
