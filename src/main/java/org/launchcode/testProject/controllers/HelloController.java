@@ -49,18 +49,12 @@ public class HelloController {
 //
 //}
 
+
+    //making it a template with thymeleaf so long string with html no longer needed
     //http://localhost:8080/form name='name' works bc of the helloWithQueryParams method
     @GetMapping("form")
-    @ResponseBody
     public String helloForm() {
-        return "<html>" +
-                "<body>" +
-                "<form action = 'hello'>" + //tells it to submit a request to /hello
-                "<input type = 'text' name ='name'>" +
-                "<input type = 'submit' value = 'Greet Me!'>" +
-                "</form>" +
-                "</body>" +
-                "</html>";
+        return "form"; //@ResponseBody no longer needed after using templates, this connects the method to form.html
     }
 
 
