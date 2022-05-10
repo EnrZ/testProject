@@ -1,10 +1,11 @@
 package org.launchcode.testProject.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //every controller we make needs a new controller annotation
 @Controller
@@ -33,11 +34,19 @@ public class HelloController {
 
     //http://localhost:8080/hello?name=_____________
     //Create a handler that handles request of the form /hello?name=LaunchCode
-    @GetMapping("hello")
-    @ResponseBody
-    public String helloWithQueryParams(@RequestParam String name) {
+    @RequestMapping(value = "hello", method = {RequestMethod.GET, RequestMethod.POST})
+    public String helloWithQueryParams(@RequestParam String name, Model model) {
+        //Model model added to params to send dynamic variable to
        //this method expects a query parameter called name(bc of requestparam), name has to match
-        return "Hello, " + name + "!";
+        String greeting = "Hello, " + name + "!";
+        model.addAttribute("greeting", greeting);
+        return "hello";
+    }
+
+    @GetMapping("hello/{name}")
+    public String helloAgain(@PathVariable String name, Model model){
+        model.addAttribute("greeting", "Hello, " + name + "!");
+        return "hello";
     }
 
     //The past method is one way to create a dynamic request handler
@@ -97,6 +106,16 @@ public class HelloController {
                 "</form>" +
                 "</body>" +
                 "</html>";
+    }
+
+    @GetMapping("hello-names")
+    public String helloNames(Model model){
+        List<String> names = new ArrayList<>();
+        names.add("LaunchCode");
+        names.add("Java");
+        names.add("Javascript");
+        model.addAttribute(("names"), names);
+        return "hello-list";
     }
 
 
